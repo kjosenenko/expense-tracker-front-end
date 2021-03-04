@@ -12,15 +12,15 @@ class User {
         let li = document.createElement("li");
         let button = document.createElement("button");
         button.className = 'btn btn-light show-user';
-        button.id = this.id;
+        // button.id = this.id;
         button.innerText = this.name;
         li.append(button);
         list.appendChild(li);
-        button.addEventListener("click", this.doThis);
+        button.addEventListener("click", this.showTransactions);
     }
 
-    doThis() {
-        console.log('clicked');
+    showTransactions = (e) => {
+        getTransactions(this.id);
     }
 
 }

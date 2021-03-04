@@ -20,7 +20,7 @@ class Transaction {
             // button.innerText = user.name;
             li.innerText = `${this.created_at} - $${this.amount}`;
             // li.append(button);
-            outputList.appendChild(li);
+            list.appendChild(li);
             // button.addEventListener("click", console.log('click'));
     }
 }

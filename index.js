@@ -1,5 +1,5 @@
 const baseUrl = "http://localhost:3000"
-const output = document.getElementById("output")
+const mainHeader = document.getElementById("mainHeader")
 const list = document.getElementById("list")
 
 document.addEventListener("DOMContentLoaded", init)
@@ -10,6 +10,8 @@ function init() {
 }
 
 function getUsers() {
+    mainHeader.innerText = "Select User"
+    list.innerText = ""
     fetch(baseUrl + `/users`)
         .then(r => r.json())
         .then(data => {
@@ -21,13 +23,15 @@ function getUsers() {
 }
 
 function getTransactions(user_id) {
+    mainHeader.innerText = "My Transactions"
+    list.innerText = ""
     fetch(baseUrl + `/users/${user_id}/transactions`)
         .then(r => r.json())
         .then(data => {
             data.forEach(element => {
-                new Transaction(element.id, element.amount, element.description, element.created_at, element.user, element.type);
+                let n = new Transaction(element.id, element.amount, element.description, element.created_at, element.user, element.type);
+                n.renderTransaction();
             });
-        Transaction.renderTransactions(Transaction.all);
         })
 }
 
