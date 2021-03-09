@@ -1,6 +1,7 @@
 class User {
 
     static all = [];
+    static currentUser = 0;
 
     constructor(id, name) {
         this.id = id;
@@ -12,7 +13,6 @@ class User {
         let li = document.createElement("li");
         let button = document.createElement("button");
         button.className = 'btn btn-light show-user';
-        // button.id = this.id;
         button.innerText = this.name;
         li.append(button);
         list.appendChild(li);
@@ -20,7 +20,15 @@ class User {
     }
 
     showTransactions = (e) => {
+        User.currentUser = this.id;
         getTransactions(this.id);
+    }
+
+    static returnUserName(user_id) {
+        let user = User.all.filter(u => {
+            return u.id === user_id;
+        })
+        return user[0].name;
     }
 
 }

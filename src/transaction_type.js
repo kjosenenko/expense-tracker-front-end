@@ -1,10 +1,17 @@
 class TransactionType {
 
-    all = []
+    static all = []
 
     constructor(id, category) {
         this.id = id;
         this.category = category;
-        this.all.push(this);
+        TransactionType.all.push(this);
+    }
+
+    static returnType(transaction_type_id) {
+        let type = TransactionType.all.filter(t => {
+            return t.id === transaction_type_id;
+        })
+        return type[0].category;
     }
 }

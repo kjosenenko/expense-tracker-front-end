@@ -2,34 +2,42 @@ class Transaction {
 
     static all = []
 
-    constructor(id, amount, description, created_at, user, type) {
+    constructor(id, amount, description, created_at, user_id, transaction_type_id) {
         this.id = id;
         this.amount = amount;
         this.description = description;
         this.created_at = created_at;
-        this.user = user;
-        this.type = type;
+        this.user_id = user_id;
+        this.transaction_type_id = transaction_type_id;
         Transaction.all.push(this);
     }
 
     renderTransaction() {
             let li = document.createElement("li");
-            // let button = document.createElement("button");
-            // button.className = 'btn btn-light show-user';
-            // button.id = user.id;
-            // button.innerText = user.name;
-            li.innerText = `${this.created_at} - $${this.amount}`;
-            // li.append(button);
+            li.innerHTML = `${Transaction.formattedDate(this.created_at)} <small>${TransactionType.returnType(this.transaction_type_id)}:</small> <b>$${this.amount}</b> - ${this.description}. `;
+            let editButton = document.createElement("button");
+            editButton.className = 'btn btn-outline-info show-expense';
+            editButton.innerText = 'edit';
+            li.append(editButton);
+            editButton.addEventListener("click", this.showTransaction);
+            let deleteButton = document.createElement("button");
+            deleteButton.className = 'btn btn-outline-danger show-expense';
+            deleteButton.innerText = 'delete';
+            li.append(deleteButton);
+            deleteButton.addEventListener("click", this.deleteTransaction);
             list.appendChild(li);
-            // button.addEventListener("click", console.log('click'));
+    }
+
+    static formattedDate(dateString) {
+        let date = new Date(dateString);
+        return (date.getMonth()+1) + '/'+date.getDate()+'/' +date.getFullYear();
+    }
+
+    showTransaction = (e) => {
+        console.log(`edit ${this.id}`);
+    }
+
+    deleteTransaction = (e) => {
+        console.log(`delete ${this.id}`);
     }
 }
-
-    // let li = document.createElement("li");
-    //     let button = document.createElement("button");
-    //     button.className = 'btn btn-light show-user';
-    //     button.id = this.id;
-    //     button.innerText = this.name;
-    //     li.append(button);
-    //     usersList.appendChild(li);
-    //     button.addEventListener("click", getTransactions(this.id));
