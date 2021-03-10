@@ -25,37 +25,7 @@ function getUsers() {
 
 function getTransactions(user_id) {
     mainHeader.innerText = `${User.returnUserName(user_id)}'s Transactions`
-    formDiv.innerHTML = `
-        <form id="transaction-form" class="col-6 bg-primary">
-            <br>
-            <h4>New Transaction</h4>
-            <div>
-                <label class="col-3"> Amount </label>
-                <input class="col-7" type="number" name="amount" id="transaction-amount">
-            </div>
-            <div>
-                <label class="col-3"> Description </label>
-                <input class="col-7" type="text" name="description" id="transaction-description">
-            </div>
-            <div>
-                <label class="col-3"> Account Type </label>
-                <select class="form-select col-7" name="transaction_type_id" id="transaction-type-id">
-                </select>
-            </div>
-            <input class="btn btn-light" type="submit" value="Add Transaction" id="transaction-submit">
-            <br><br>
-        </form>
-    `
-    const form = document.getElementById("transaction-form")
-    const select = document.getElementById("transaction-type-id")
-    let types = TransactionType.all;
-    types.forEach(element => {
-        let option = document.createElement("option");
-        option.value = `${element.id}`;
-        option.innerText = `${element.category}`;
-        select.appendChild(option);
-    })
-    form.addEventListener("submit", handleSubmit);
+    Transaction.renderEmptyForm();
     list.innerText = "";
     fetch(baseUrl + `/users/${user_id}/transactions`)
         .then(r => r.json())
@@ -96,5 +66,23 @@ function handleSubmit(e) {
         .then(element => {
             let transaction = new Transaction(element.id, element.amount, element.description, element.created_at, element.user_id, element.transaction_type_id);
             transaction.renderTransaction();
+        })
+
+}
+
+function handleDeleteTransaction(transaction_id) {
+    fetch(baseUrl + `/users/${User.currentUser}/transactions/${transaction_id}`, {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+        .then(r => {
+            if (r.status == 200) {
+                let index = Transaction.all.findIndex(t => {return t.id === transaction_id});
+                Transaction.all.splice(index, 1);
+                list.innerText = "";
+                Transaction.all.forEach(t => {t.renderTransaction()})
+            }
         })
 }
