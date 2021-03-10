@@ -17,6 +17,7 @@ class APIservice {
 
     static getTransactions(user_id) {
         mainHeader.innerText = `${User.returnUserName(user_id)}'s Transactions`
+        User.renderBackToAllusersButton();
         Transaction.renderEmptyForm();
         list.innerText = "";
         fetch(baseUrl + `/users/${user_id}/transactions`)

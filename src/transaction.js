@@ -69,6 +69,7 @@ class Transaction {
 
     editTransaction = (e) => {
         list.innerText = "";
+        buttonArea.innerHTML = "";
         let cancelButton = document.createElement("button");
         cancelButton.innerText = "Cancel";
         cancelButton.className = 'btn btn-outline-secondary';
@@ -121,6 +122,7 @@ class Transaction {
 
     static reloadTransactions() {
         buttonArea.innerHTML = "";
+        User.renderBackToAllusersButton();
         Transaction.all.forEach(t => {t.renderTransaction()});
         Transaction.renderEmptyForm();
     }

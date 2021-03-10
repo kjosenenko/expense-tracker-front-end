@@ -12,11 +12,28 @@ class User {
     renderUser() {
         let li = document.createElement("li");
         let button = document.createElement("button");
-        button.className = 'btn btn-light show-user';
+        button.className = 'btn btn-light';
         button.innerText = this.name;
         li.append(button);
         list.appendChild(li);
         button.addEventListener("click", this.showTransactions);
+    }
+
+    static backToAllUsers() {
+        mainHeader.innerText = "Select User";
+        list.innerText = "";
+        buttonArea.innerHTML = "";
+        formDiv.innerHTML = "";
+        User.currentUser = 0
+        User.all.forEach(u => {u.renderUser()});
+    }
+
+    static renderBackToAllusersButton() {
+        let button = document.createElement("button");
+        button.className = 'btn-secondary btn';
+        button.innerText = 'Back to Select User';
+        button.addEventListener("click", User.backToAllUsers);
+        buttonArea.appendChild(button);
     }
 
     showTransactions = (e) => {
