@@ -10,7 +10,7 @@ class TransactionType {
 
     static returnType(transaction_type_id) {
         let type = TransactionType.all.filter(t => {
-            return t.id === transaction_type_id;
+            return t.id == transaction_type_id;
         })
         return type[0].category;
     }

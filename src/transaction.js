@@ -43,19 +43,19 @@ class Transaction {
             option.innerText = `${element.category}`;
             select.appendChild(option);
         })
-        form.addEventListener("submit", handleSubmit);
+        form.addEventListener("submit", APIservice.postTransactionToDB);
     }
 
     renderTransaction() {
             let li = document.createElement("li");
             li.innerHTML = `${Transaction.formattedDate(this.created_at)} <small>${TransactionType.returnType(this.transaction_type_id)}:</small> <b>$${this.amount}</b> - ${this.description}. `;
             let editButton = document.createElement("button");
-            editButton.className = 'btn btn-outline-info show-expense';
+            editButton.className = 'btn btn-outline-info';
             editButton.innerText = 'edit';
             li.append(editButton);
             editButton.addEventListener("click", this.editTransaction);
             let deleteButton = document.createElement("button");
-            deleteButton.className = 'btn btn-outline-danger show-expense';
+            deleteButton.className = 'btn btn-outline-danger';
             deleteButton.innerText = 'delete';
             li.append(deleteButton);
             deleteButton.addEventListener("click", this.deleteTransaction);
@@ -69,6 +69,11 @@ class Transaction {
 
     editTransaction = (e) => {
         list.innerText = "";
+        let cancelButton = document.createElement("button");
+        cancelButton.innerText = "Cancel";
+        cancelButton.className = 'btn btn-outline-secondary';
+        cancelButton.addEventListener("click", Transaction.reloadTransactions)
+        buttonArea.appendChild(cancelButton);
         formDiv.innerHTML = `
         <form id="transaction-form" class="col-6 bg-primary">
             <br>
@@ -90,21 +95,33 @@ class Transaction {
             <br><br>
         </form>
     `
-    const form = document.getElementById("transaction-form")
-    const select = document.getElementById("transaction-type-id")
-    let types = TransactionType.all;
-    types.forEach(element => {
-        let option = document.createElement("option");
-        option.value = `${element.id}`;
-        option.innerText = `${element.category}`;
-        if(option.value == this.transaction_type_id) {
-            option.selected = true;
-        }
-        select.appendChild(option);
-    })
+        const form = document.getElementById("transaction-form")
+        const select = document.getElementById("transaction-type-id")
+        let types = TransactionType.all;
+        types.forEach(element => {
+            let option = document.createElement("option");
+            option.value = `${element.id}`;
+            option.innerText = `${element.category}`;
+            if(option.value == this.transaction_type_id) {
+                option.selected = true;
+            }
+            select.appendChild(option);
+        })
+        form.addEventListener("submit", this.updateTransaction);
     }
 
     deleteTransaction = (e) => {
-        handleDeleteTransaction(this.id);
+        APIservice.deleteTransactionFromDB(this.id);
+    }
+
+    updateTransaction = (e) => {
+        e.preventDefault();
+        APIservice.updateTransactionOnDB(e, this.id);
+    }
+
+    static reloadTransactions() {
+        buttonArea.innerHTML = "";
+        Transaction.all.forEach(t => {t.renderTransaction()});
+        Transaction.renderEmptyForm();
     }
 }

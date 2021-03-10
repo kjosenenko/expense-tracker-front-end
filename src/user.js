@@ -21,7 +21,7 @@ class User {
 
     showTransactions = (e) => {
         User.currentUser = this.id;
-        getTransactions(this.id);
+        APIservice.getTransactions(this.id);
     }
 
     static returnUserName(user_id) {
