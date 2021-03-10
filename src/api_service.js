@@ -64,16 +64,6 @@ class APIservice {
             })
     }
 
-    static login(e) {
-        e.preventDefault();
-        console.log('login');
-    }
-
-    static signup(e) {
-        e.preventDefault();
-        console.log('sign up');
-    }
-
     // PATCH
 
     static updateTransactionOnDB(e, transaction_id) {

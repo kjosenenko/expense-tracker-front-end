@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", init)
 
 
 function init() {
-    // APIservice.getUsers();
-    User.renderLoginAndSignupForms();
+    APIservice.getUsers();
     APIservice.getTransactionTypes();
 }
