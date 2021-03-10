@@ -24,7 +24,8 @@ class User {
         list.innerText = "";
         buttonArea.innerHTML = "";
         formDiv.innerHTML = "";
-        User.currentUser = 0
+        User.currentUser = 0;
+        Transaction.all = [];
         User.all.forEach(u => {u.renderUser()});
     }
 
