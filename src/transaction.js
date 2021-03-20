@@ -36,9 +36,9 @@ class Transaction {
         `
         const form = document.getElementById("transaction-form")
         const select = document.getElementById("transaction-type-id")
-        let types = TransactionType.all;
+        const types = TransactionType.all;
         types.forEach(element => {
-            let option = document.createElement("option");
+            const option = document.createElement("option");
             option.value = `${element.id}`;
             option.innerText = `${element.category}`;
             select.appendChild(option);
@@ -47,14 +47,14 @@ class Transaction {
     }
 
     renderTransaction() {
-            let li = document.createElement("li");
+            const li = document.createElement("li");
             li.innerHTML = `${Transaction.formattedDate(this.created_at)} <small>${TransactionType.returnType(this.transaction_type_id)}:</small> <b>$${this.amount}</b> - ${this.description}. `;
-            let editButton = document.createElement("button");
+            const editButton = document.createElement("button");
             editButton.className = 'btn btn-outline-info';
             editButton.innerText = 'edit';
             li.append(editButton);
             editButton.addEventListener("click", this.editTransaction);
-            let deleteButton = document.createElement("button");
+            const deleteButton = document.createElement("button");
             deleteButton.className = 'btn btn-outline-danger';
             deleteButton.innerText = 'delete';
             li.append(deleteButton);
@@ -63,14 +63,14 @@ class Transaction {
     }
 
     static formattedDate(dateString) {
-        let date = new Date(dateString);
+        const date = new Date(dateString);
         return (date.getMonth()+1) + '/'+date.getDate()+'/' +date.getFullYear();
     }
 
     editTransaction = (e) => {
         list.innerText = "";
         buttonArea.innerHTML = "";
-        let cancelButton = document.createElement("button");
+        const cancelButton = document.createElement("button");
         cancelButton.innerText = "Cancel";
         cancelButton.className = 'btn btn-outline-secondary';
         cancelButton.addEventListener("click", Transaction.reloadTransactions)
@@ -98,9 +98,9 @@ class Transaction {
     `
         const form = document.getElementById("transaction-form")
         const select = document.getElementById("transaction-type-id")
-        let types = TransactionType.all;
+        const types = TransactionType.all;
         types.forEach(element => {
-            let option = document.createElement("option");
+            const option = document.createElement("option");
             option.value = `${element.id}`;
             option.innerText = `${element.category}`;
             if(option.value == this.transaction_type_id) {

@@ -9,7 +9,7 @@ class APIservice {
             .then(r => r.json())
             .then(data => {
                 data.forEach(element => {
-                    let user = new User(element.id, element.name);
+                    const user = new User(element.id, element.name);
                     user.renderUser();
                 });
             })
@@ -24,7 +24,7 @@ class APIservice {
             .then(r => r.json())
             .then(data => {
                 data.forEach(element => {
-                    let transaction = new Transaction(element.id, element.amount, element.description, element.created_at, element.user_id, element.transaction_type_id);
+                    const transaction = new Transaction(element.id, element.amount, element.description, element.created_at, element.user_id, element.transaction_type_id);
                     transaction.renderTransaction();
                 });
             })
@@ -59,7 +59,7 @@ class APIservice {
         })
             .then(r => r.json())
             .then(element => {
-                let transaction = new Transaction(element.id, element.amount, element.description, element.created_at, element.user_id, element.transaction_type_id);
+                const transaction = new Transaction(element.id, element.amount, element.description, element.created_at, element.user_id, element.transaction_type_id);
                 transaction.renderTransaction();
                 Transaction.renderEmptyForm();
             })
@@ -82,8 +82,8 @@ class APIservice {
         })
             .then(r => {
                 if (r.status == 200) {
-                    let index = Transaction.all.findIndex(t => {return t.id === transaction_id});
-                    let transaction = Transaction.all[index];
+                    const index = Transaction.all.findIndex(t => {return t.id === transaction_id});
+                    const transaction = Transaction.all[index];
                     transaction.amount = e.target[0].value;
                     transaction.description = e.target[1].value;
                     transaction.transaction_type_id = e.target[2].value;
@@ -103,7 +103,7 @@ class APIservice {
         })
             .then(r => {
                 if (r.status == 200) {
-                    let index = Transaction.all.findIndex(t => {return t.id === transaction_id});
+                    const index = Transaction.all.findIndex(t => {return t.id === transaction_id});
                     Transaction.all.splice(index, 1);
                     list.innerText = "";
                     Transaction.all.forEach(t => {t.renderTransaction()});

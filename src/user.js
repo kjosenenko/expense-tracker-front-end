@@ -10,8 +10,8 @@ class User {
     }
 
     renderUser() {
-        let li = document.createElement("li");
-        let button = document.createElement("button");
+        const li = document.createElement("li");
+        const button = document.createElement("button");
         button.className = 'btn btn-light';
         button.innerText = this.name;
         li.append(button);
@@ -30,7 +30,7 @@ class User {
     }
 
     static renderBackToAllusersButton() {
-        let button = document.createElement("button");
+        const button = document.createElement("button");
         button.className = 'btn-secondary btn';
         button.innerText = 'Back to Select User';
         button.addEventListener("click", User.backToAllUsers);
@@ -43,7 +43,7 @@ class User {
     }
 
     static returnUserName(user_id) {
-        let user = User.all.filter(u => {
+        const user = User.all.filter(u => {
             return u.id === user_id;
         })
         return user[0].name;
