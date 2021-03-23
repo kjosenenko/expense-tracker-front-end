@@ -19,6 +19,42 @@ class User {
         button.addEventListener("click", this.showTransactions);
     }
 
+    static renderNewUserForm() {
+        formDiv.innerHTML = `
+        <form id="user-form" class="col-6 bg-primary">
+            <br>
+            <h4>New User</h4>
+            <div>
+                <label class="col-3"> Name </label>
+                <input class="col-7" type="text" name="name" id="user-name">
+            </div>
+            <input class="btn btn-light" type="submit" value="Create" id="user-submit">
+            <br><br>
+        </form>
+    `
+        const userForm = document.getElementById('user-form')
+        userForm.addEventListener("submit", User.CreateNewUser)
+    }
+
+    static CreateNewUser =(e) => {
+        e.preventDefault();
+        const userInfo = {
+            name: e.target[0].value
+        }
+        fetch(baseUrl + '/users', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userInfo)})
+                .then(r => r.json())
+                .then(element => {
+                        const user = new User(element.id, element.name);
+                        user.renderUser();
+                        APIservice.getTransactions(user.id)
+                    });
+    }
+
     static backToAllUsers() {
         mainHeader.innerText = "Select User";
         list.innerText = "";

@@ -13,6 +13,7 @@ class APIservice {
                     user.renderUser();
                 });
             })
+        User.renderNewUserForm()
     }
 
     static getTransactions(user_id) {
