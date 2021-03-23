@@ -51,6 +51,7 @@ class User {
                 .then(element => {
                         const user = new User(element.id, element.name);
                         user.renderUser();
+                        User.currentUser = user.id;
                         APIservice.getTransactions(user.id)
                     });
     }
@@ -62,6 +63,7 @@ class User {
         formDiv.innerHTML = "";
         User.currentUser = 0;
         Transaction.all = [];
+        User.renderNewUserForm()
         User.all.forEach(u => {u.renderUser()});
     }
 
